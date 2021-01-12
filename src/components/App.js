@@ -1,5 +1,12 @@
 import React from "react";
+import { GlobalStyles } from "../styles/GlobalStyles";
+import LandingPage from "./LandingPage";
 
 export default function App() {
-	return <div>Hello React</div>;
+	return (
+		<div>
+			<GlobalStyles />
+			<LandingPage />
+		</div>
+	);
 }
