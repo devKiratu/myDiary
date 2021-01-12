@@ -1,4 +1,5 @@
 import React from "react";
+import { Message } from "../styles/LandingPageStyles";
 import {
 	Header,
 	SignInButton,
@@ -13,6 +14,8 @@ function LandingNav() {
 				<Header>myDiary</Header>
 			</div>
 			<div>
+				<Message>Features</Message>
+				<Message>Contact</Message>
 				<SignInButton>Sign In</SignInButton>
 				<SignUpButton>Sign Up</SignUpButton>
 			</div>

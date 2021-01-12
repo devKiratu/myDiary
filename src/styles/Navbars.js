@@ -7,6 +7,7 @@ export const StyledNav = styled.nav`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	box-sizing: border-box;
 `;
 
 export const Header = styled.h1`
@@ -24,16 +25,25 @@ export const SignInButton = styled.button`
 	outline: none;
 	font-weight: bold;
 	cursor: pointer;
+	margin: 20px;
+
+	/* @media (max-width: 705px) {
+		display: block;
+	} */
 `;
 
 export const SignUpButton = styled.button`
 	border: none;
 	padding: 10px;
-	margin: 0 40px;
+	margin: 20px;
 	border-radius: 5px;
 	background-color: #fff;
 	font-weight: bold;
 	outline: none;
 	border: 2px solid #000;
 	cursor: pointer;
+
+	/* @media (max-width: 705px) {
+		display: block;
+	} */
 `;
