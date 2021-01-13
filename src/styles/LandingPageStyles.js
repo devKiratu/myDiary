@@ -1,8 +1,17 @@
 import styled from "styled-components";
+import img4 from "./img/plain-notebk-flower.jpg";
 
 export const Hero = styled.div`
 	height: 85vh;
 	padding: 20px;
+	background: url(${img4}) center center no-repeat fixed;
+	/* background-position: -3000px -2300px; */
+	background-size: cover;
+
+	/* @media (max-width: 1500px) {
+		background-size: center/cover;
+		background-position: 0 0px;
+	} */
 `;
 
 export const Container = styled.div`

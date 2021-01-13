@@ -38,6 +38,7 @@ export const SignUpButton = styled.button`
 	margin: 20px;
 	border-radius: 5px;
 	background-color: #fff;
+	/* background: transparent; */
 	font-weight: bold;
 	outline: none;
 	border: 2px solid #000;
