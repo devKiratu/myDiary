@@ -1,17 +1,12 @@
 import React from "react";
 import { Message } from "../styles/LandingPageStyles";
-import {
-	Header,
-	SignInButton,
-	SignUpButton,
-	StyledNav,
-} from "../styles/Navbars";
+import { Logo, SignInButton, SignUpButton, StyledNav } from "../styles/Navbars";
 
 function LandingNav() {
 	return (
 		<StyledNav>
 			<div>
-				<Header>myDiary</Header>
+				<Logo>myDiary</Logo>
 			</div>
 			<div>
 				<Message>Features</Message>

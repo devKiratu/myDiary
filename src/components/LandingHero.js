@@ -1,10 +1,12 @@
 import React from "react";
 import { Container, Hero, Message } from "../styles/LandingPageStyles";
 import { Header, SignInButton, SignUpButton } from "../styles/Navbars";
+import LandingNav from "./LandingNav";
 
 function LandingHero() {
 	return (
 		<Hero>
+			<LandingNav />
 			<Container>
 				<div>
 					<Header>Karibu hapa</Header>
