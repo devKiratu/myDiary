@@ -14,6 +14,7 @@ export const StyledNav = styled.nav`
 
 	@media (max-width: 700px) {
 		display: inline;
+		position: relative;
 	}
 `;
 
@@ -33,6 +34,10 @@ export const SignInButton = styled.button`
 	font-weight: bold;
 	cursor: pointer;
 	margin: 10px;
+
+	@media (max-width: 500px) {
+		margin: 5px;
+	}
 `;
 
 export const SignUpButton = styled.button`
@@ -45,6 +50,10 @@ export const SignUpButton = styled.button`
 	outline: none;
 	border: 2px solid #000;
 	cursor: pointer;
+
+	@media (max-width: 500px) {
+		margin: 5px;
+	}
 `;
 
 export const Logo = styled.h1`
@@ -55,7 +64,7 @@ export const Logo = styled.h1`
 	margin: 0 40px;
 
 	@media (max-width: 700px) {
-		padding: 0;
+		/* padding: 0; */
 		margin: 0;
 	}
 `;
