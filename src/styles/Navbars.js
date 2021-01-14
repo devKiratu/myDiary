@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const StyledNav = styled.nav`
 	background-color: transparent;
@@ -7,6 +8,9 @@ export const StyledNav = styled.nav`
 	justify-content: space-between;
 	align-items: center;
 	box-sizing: border-box;
+	padding-top: 10px;
+	position: sticky;
+	top: 0;
 
 	@media (max-width: 700px) {
 		display: inline;
@@ -49,4 +53,14 @@ export const Logo = styled.h1`
 	/* font-family: "Crafty Girls", cursive; */
 	padding: 20px;
 	margin: 0 40px;
+
+	@media (max-width: 700px) {
+		padding: 0;
+		margin: 0;
+	}
+`;
+
+export const StyledLink = styled(Link)`
+	text-decoration: none;
+	color: #000;
 `;
