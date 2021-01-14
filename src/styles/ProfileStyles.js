@@ -1,0 +1,50 @@
+import styled from "styled-components";
+
+export const ProfilePage = styled.div`
+	height: 100vh;
+	/* overflow-y: auto; */
+`;
+
+export const NotesContainer = styled.div`
+	height: 90%;
+	overflow-y: auto;
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+`;
+
+export const DisplayContainer = styled.div`
+	/* background-color: #f7f7f7; */
+	overflow-y: auto;
+`;
+
+export const HistoryContainer = styled.div`
+	/* background-color: #f7f7f7; */
+	overflow-y: auto;
+`;
+
+export const StyledProfileNav = styled.nav`
+	height: 10%;
+	background-color: #000;
+	color: #fff;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-sizing: border-box;
+	/* padding-top: 10px; */
+	position: sticky;
+	top: 0;
+`;
+
+export const CardContent = styled.div`
+	margin: 10px;
+	height: 100px;
+	overflow: hidden;
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.75);
+	cursor: pointer;
+	text-align: left;
+	padding: 10px;
+`;
+
+export const CardPara = styled.p`
+	padding: 5px;
+`;
