@@ -8,10 +8,12 @@ import {
 } from "../../styles/FormStyles";
 import { Logo } from "../../styles/Navbars";
 import { Message } from "../../styles/LandingPageStyles";
+import LandingNav from "../LandingNav";
 
 function SignIn() {
 	return (
 		<FormContainer>
+			<LandingNav />
 			<Form>
 				<Logo>myDiary</Logo>
 				<Message>Create an Account </Message>

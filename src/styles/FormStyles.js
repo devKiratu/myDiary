@@ -2,13 +2,14 @@ import styled from "styled-components";
 
 export const FormContainer = styled.div`
 	background-color: rgb(230, 230, 230);
-	box-sizing: border-box;
+	/* box-sizing: border-box; */
 	height: 100vh;
+	overflow-y: auto;
 `;
 
 export const Form = styled.form`
 	width: 400px;
-	margin: 0 auto;
+	margin: 30px auto;
 	border: 1px solid #999;
 	box-shadow: 1px 5px 5px rgba(0, 0, 0, 0.2);
 	height: 550px;
