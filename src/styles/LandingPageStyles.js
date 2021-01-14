@@ -3,7 +3,6 @@ import img4 from "./img/plain-notebk-flowerv2.jpg";
 
 export const Hero = styled.div`
 	height: 100vh;
-	/* padding: 20px; */
 	background: url(${img4}) center center no-repeat fixed;
 	background-size: cover;
 	background-color: rgb(230, 230, 230);
@@ -30,5 +29,6 @@ export const Message = styled.p`
 
 	@media (max-width: 700px) {
 		margin: 0 1px;
+		padding: 5px;
 	}
 `;

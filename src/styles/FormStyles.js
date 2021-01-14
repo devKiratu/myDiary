@@ -16,6 +16,11 @@ export const Form = styled.form`
 	border-radius: 10px;
 	box-sizing: border-box;
 	padding: 30px;
+
+	@media (max-width: 500px) {
+		width: 300px;
+		/* height: 500px; */
+	}
 `;
 
 export const Label = styled.label`
