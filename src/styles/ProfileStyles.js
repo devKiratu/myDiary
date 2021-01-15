@@ -46,5 +46,5 @@ export const CardContent = styled.div`
 `;
 
 export const CardPara = styled.p`
-	padding: 5px;
+	padding: 5px 5px 10px;
 `;

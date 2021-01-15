@@ -1,23 +1,36 @@
-import React from "react";
-import { Message } from "../styles/LandingPageStyles";
+import React, { useContext, useEffect, useState } from "react";
+import { GlobalContext } from "../context/GlobalState";
 import { CardContent, CardPara } from "../styles/ProfileStyles";
 
-function HistoryCard() {
+function HistoryCard({ content, created, id }) {
+	const { displayNote } = useContext(GlobalContext);
+	const [noteSnippet, setNoteSnippet] = useState(content);
+	const [maxLength, setMaxLength] = useState(215);
+
+	console.log(maxLength);
+
+	useEffect(() => {
+		window.addEventListener(
+			"resize",
+			setMaxLength(Math.floor(window.innerWidth / 8))
+		);
+	}, [setMaxLength]);
+
+	useEffect(() => {
+		setNoteSnippet(
+			content.length > maxLength
+				? `${content.substr(0, maxLength)}...`
+				: content
+		);
+	}, [content, maxLength]);
+
 	return (
-		<CardContent>
-			<h5>Note title</h5>
-			<CardPara>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at
-				risus erat. Vestibulum facilisis nunc lectus. Mauris faucibus arcu quis
-				finibus hendrerit. Ut venenatis ac ligula at porta. Etiam tempor, sapien
-				non vestibulum vestibulum, ipsum orci mollis est, sit amet facilisis
-				augue metus scelerisque dui. Pellentesque pharetra massa a ante pulvinar
-				pellentesque. Cras sed ex accumsan, consequat risus et, aliquet felis.
-				Nunc nibh tellus, posuere non dui at, efficitur vehicula sapien. Morbi
-				scelerisque bibendum consequat. Ut consectetur turpis ac dapibus mattis.
-				Suspendisse lacinia libero ut velit lobortis tincidunt. Maecenas
-				imperdiet imperdiet porttitor.
-			</CardPara>
+		<CardContent onClick={() => displayNote(id)}>
+			<h5>
+				Note title &nbsp; &nbsp;
+				<span>Created: {new Date(created).toDateString()}</span>
+			</h5>
+			<CardPara>{noteSnippet}</CardPara>
 		</CardContent>
 	);
 }
