@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { CardContent, CardPara } from "../styles/ProfileStyles";
 
-function HistoryCard({ content, created, id }) {
+function HistoryCard({ content, created, id, title }) {
 	const { displayNote } = useContext(GlobalContext);
 	const [noteSnippet, setNoteSnippet] = useState(content);
-	const [maxLength, setMaxLength] = useState(215);
+	const [maxLength, setMaxLength] = useState(192);
 
 	console.log(maxLength);
 
@@ -27,7 +27,7 @@ function HistoryCard({ content, created, id }) {
 	return (
 		<CardContent onClick={() => displayNote(id)}>
 			<h5>
-				Note title &nbsp; &nbsp;
+				{title} &nbsp; &nbsp;
 				<span>Created: {new Date(created).toDateString()}</span>
 			</h5>
 			<CardPara>{noteSnippet}</CardPara>
