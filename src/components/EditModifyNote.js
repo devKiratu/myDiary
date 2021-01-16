@@ -6,14 +6,12 @@ import {
 	NotesLabel,
 	TextArea,
 } from "../styles/FormStyles";
-import { SaveButton } from "../styles/Navbars";
-import NotesboardNavbar from "./NotesboardNavbar";
+import { NotesNav, SaveButton } from "../styles/Navbars";
 
 export default function EditModifyNote() {
 	const [title, setTitle] = useState("");
 	const [text, setText] = useState(``);
-	// const [newEntry, setNewEntry] = useState([]);
-	const { addEntry, displayNote, toggleNoteEditor } = useContext(GlobalContext);
+	const { addEntry, toggleNoteEditor } = useContext(GlobalContext);
 
 	function handleSubmit(e) {
 		e.preventDefault();
@@ -26,16 +24,16 @@ export default function EditModifyNote() {
 		};
 		addEntry(newEntry);
 		toggleNoteEditor();
-		// displayNote(newEntry.id);
 
 		console.log(newEntry);
 	}
 
 	return (
 		<div>
-			<NotesboardNavbar />
 			<NotesForm onSubmit={handleSubmit}>
-				<SaveButton type="submit">Save</SaveButton>
+				<NotesNav>
+					<SaveButton type="submit">Save</SaveButton>
+				</NotesNav>
 
 				<NotesLabel htmlFor="Note Title">Note Title</NotesLabel>
 				<NotesInput

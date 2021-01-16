@@ -25,7 +25,7 @@ export default function AppReducer(state, action) {
 		case "SET_CURRENTLY_DISPLAYED":
 			return {
 				...state,
-				currentlyDisplayed: `${action.payload}`,
+				currentlyDisplayed: action.payload,
 			};
 		default:
 			return state;

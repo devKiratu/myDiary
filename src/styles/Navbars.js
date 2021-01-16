@@ -101,7 +101,7 @@ export const NavButton = styled.button`
 
 export const SaveButton = styled.button`
 	padding: 5px;
-	margin: 2px;
+	margin: 2px 30px;
 	border-radius: 5px;
 	background-color: #fff;
 	font-weight: bold;
@@ -109,5 +109,5 @@ export const SaveButton = styled.button`
 	border: 2px solid #000;
 	cursor: pointer;
 	display: block;
-	/* float: right; */
+	/* float: right;  */
 `;

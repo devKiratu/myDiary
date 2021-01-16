@@ -9,7 +9,7 @@ function HistoryPanel() {
 		GlobalContext
 	);
 
-	console.log("the current note is", currentlyDisplayed);
+	// console.log("the current note is", currentlyDisplayed);
 
 	return (
 		<HistoryContainer>
