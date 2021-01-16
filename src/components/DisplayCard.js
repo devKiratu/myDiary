@@ -4,9 +4,12 @@ import { Message } from "../styles/LandingPageStyles";
 import { NavButton, NotesNav } from "../styles/Navbars";
 
 function DisplayCard() {
-	const { currentlyDisplayed, deleteEntry, displayNote } = useContext(
-		GlobalContext
-	);
+	const {
+		currentlyDisplayed,
+		deleteEntry,
+		displayNote,
+		toggleNoteEditor,
+	} = useContext(GlobalContext);
 
 	function handleDelete(e) {
 		// console.log("the id is ", currentlyDisplayed.id);
@@ -14,10 +17,16 @@ function DisplayCard() {
 		displayNote(0);
 	}
 
+	function handleEdit() {
+		if (currentlyDisplayed.id !== 0) {
+			toggleNoteEditor();
+			console.log("modify note whose id is", currentlyDisplayed.id);
+		}
+	}
 	return (
 		<div>
 			<NotesNav>
-				<NavButton>Edit</NavButton>
+				<NavButton onClick={handleEdit}>Edit</NavButton>
 				<NavButton onClick={handleDelete}>Delete</NavButton>
 			</NotesNav>
 			<h4>{currentlyDisplayed.title}</h4>

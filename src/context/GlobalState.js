@@ -22,6 +22,7 @@ const initialState = {
 		text: `Click a note to display`,
 		title: "",
 		id: 0,
+		created: 0,
 	},
 	noteEditor: false,
 };
@@ -42,14 +43,16 @@ export default function GlobalProvider({ children }) {
 		});
 	}
 
-	// function modifyEntry ( id ) {
-	// 	const [selectedEntry] = state.entries.filter((entry) => entry.id === id);
+	function modifyEntry(modifiedEntry, id) {
+		const unmodifiedEntries = state.entries.filter((entry) => entry.id !== id);
+		console.log("unmodified entries are ", unmodifiedEntries);
+		const updatedEntries = [...unmodifiedEntries, modifiedEntry];
 
-	// 		dispatch({
-	// 			type: "MODIFY_ENTRY",
-	// 			payload: id,
-	// 		});
-	// 	}
+		dispatch({
+			type: "MODIFY_ENTRY",
+			payload: updatedEntries,
+		});
+	}
 
 	function deleteEntry(id) {
 		if (id !== 0) {
@@ -81,6 +84,7 @@ export default function GlobalProvider({ children }) {
 					text: selectedEntry.content,
 					title: selectedEntry.title,
 					id: selectedEntry.id,
+					created: selectedEntry.created,
 				},
 			});
 		}
@@ -102,7 +106,7 @@ export default function GlobalProvider({ children }) {
 				displayNote,
 				toggleNoteEditor,
 				addEntry,
-				// modifyEntry,
+				modifyEntry,
 				deleteEntry,
 			}}
 		>

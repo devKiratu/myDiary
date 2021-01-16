@@ -11,11 +11,20 @@ import { NotesNav, SaveButton } from "../styles/Navbars";
 export default function EditModifyNote() {
 	const [title, setTitle] = useState("");
 	const [text, setText] = useState(``);
-	const { addEntry, toggleNoteEditor } = useContext(GlobalContext);
+	const {
+		addEntry,
+		toggleNoteEditor,
+		currentlyDisplayed,
+		entries,
+		displayNote,
+		modifyEntry,
+	} = useContext(GlobalContext);
+	const [editTitle, setEditTitle] = useState(currentlyDisplayed.title);
+	const [EditText, setEditText] = useState(currentlyDisplayed.text);
+	// console.log("I've opened to modify note of id", currentlyDisplayed.id);
+	const ids = entries.map((entry) => entry.id);
 
-	function handleSubmit(e) {
-		e.preventDefault();
-
+	function handleNewEntry() {
 		const newEntry = {
 			id: Date.now(),
 			created: Date.now(),
@@ -24,8 +33,27 @@ export default function EditModifyNote() {
 		};
 		addEntry(newEntry);
 		toggleNoteEditor();
-
 		console.log(newEntry);
+	}
+
+	function handleModifyEntry() {
+		const modifiedEntry = {
+			id: currentlyDisplayed.id,
+			created: currentlyDisplayed.created,
+			title: editTitle,
+			content: EditText,
+		};
+
+		modifyEntry(modifiedEntry, currentlyDisplayed.id);
+		toggleNoteEditor();
+		displayNote(0);
+	}
+
+	function handleSubmit(e) {
+		e.preventDefault();
+		ids.includes(currentlyDisplayed.id)
+			? handleModifyEntry()
+			: handleNewEntry();
 	}
 
 	return (
@@ -39,13 +67,21 @@ export default function EditModifyNote() {
 				<NotesInput
 					type="text"
 					placeholder="Enter note title here"
-					value={title}
-					onChange={(e) => setTitle(e.target.value)}
+					value={ids.includes(currentlyDisplayed.id) ? editTitle : title}
+					onChange={
+						ids.includes(currentlyDisplayed.id)
+							? (e) => setEditTitle(e.target.value)
+							: (e) => setTitle(e.target.value)
+					}
 				/>
 				<TextArea
 					placeholder="Enter note content here"
-					value={text}
-					onChange={(e) => setText(e.target.value)}
+					value={ids.includes(currentlyDisplayed.id) ? EditText : text}
+					onChange={
+						ids.includes(currentlyDisplayed.id)
+							? (e) => setEditText(e.target.value)
+							: (e) => setText(e.target.value)
+					}
 				/>
 			</NotesForm>
 		</div>

@@ -7,7 +7,7 @@ import HistoryPanel from "./HistoryPanel";
 import ProfileNav from "./ProfileNav";
 
 function Profile() {
-	const { noteEditor } = useContext(GlobalContext);
+	const { noteEditor, currentlyDisplayed } = useContext(GlobalContext);
 	return (
 		<ProfilePage>
 			<ProfileNav />
