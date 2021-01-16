@@ -1,7 +1,12 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { Message } from "../styles/LandingPageStyles";
-import { Logo, SignUpButton } from "../styles/Navbars";
+import {
+	Logo,
+	SignUpButton,
+	StyledLogoLink,
+	StyledLink,
+} from "../styles/Navbars";
 import { StyledProfileNav } from "../styles/ProfileStyles";
 
 function ProfileNav() {
@@ -9,12 +14,16 @@ function ProfileNav() {
 	return (
 		<StyledProfileNav>
 			<div>
-				<Logo>myDiary</Logo>
+				<StyledLogoLink to="/">
+					<Logo>myDiary</Logo>
+				</StyledLogoLink>
 			</div>
 			<div>
 				<Message>Total Notes: {entries.length} </Message>
 				<Message>Settings</Message>
-				<SignUpButton>Logout</SignUpButton>
+				<StyledLink to="/">
+					<SignUpButton>Logout</SignUpButton>
+				</StyledLink>
 			</div>
 		</StyledProfileNav>
 	);

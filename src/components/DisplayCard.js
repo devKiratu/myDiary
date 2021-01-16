@@ -20,7 +20,7 @@ function DisplayCard() {
 	function handleEdit() {
 		if (currentlyDisplayed.id !== 0) {
 			toggleNoteEditor();
-			console.log("modify note whose id is", currentlyDisplayed.id);
+			// console.log("modify note whose id is", currentlyDisplayed.id);
 		}
 	}
 	return (

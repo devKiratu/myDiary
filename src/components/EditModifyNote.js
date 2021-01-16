@@ -33,7 +33,7 @@ export default function EditModifyNote() {
 		};
 		addEntry(newEntry);
 		toggleNoteEditor();
-		console.log(newEntry);
+		// console.log(newEntry);
 	}
 
 	function handleModifyEntry() {

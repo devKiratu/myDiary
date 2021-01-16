@@ -5,11 +5,7 @@ import { HistoryContainer } from "../styles/ProfileStyles";
 import HistoryCard from "./HistoryCard";
 
 function HistoryPanel() {
-	const { entries, currentlyDisplayed, toggleNoteEditor } = useContext(
-		GlobalContext
-	);
-
-	// console.log("the current note is", currentlyDisplayed);
+	const { entries, toggleNoteEditor } = useContext(GlobalContext);
 
 	return (
 		<HistoryContainer>

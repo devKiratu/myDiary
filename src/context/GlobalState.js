@@ -45,7 +45,7 @@ export default function GlobalProvider({ children }) {
 
 	function modifyEntry(modifiedEntry, id) {
 		const unmodifiedEntries = state.entries.filter((entry) => entry.id !== id);
-		console.log("unmodified entries are ", unmodifiedEntries);
+		// console.log("unmodified entries are ", unmodifiedEntries);
 		const updatedEntries = [...unmodifiedEntries, modifiedEntry];
 
 		dispatch({

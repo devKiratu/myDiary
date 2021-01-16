@@ -71,7 +71,15 @@ export const Logo = styled.h1`
 
 export const StyledLink = styled(Link)`
 	text-decoration: none;
+	outline: none;
 	color: #000;
+`;
+
+export const StyledLogoLink = styled(Link)`
+	text-decoration: none;
+	outline: none;
+
+	color: #fff;
 `;
 
 export const NotesNav = styled.nav`
