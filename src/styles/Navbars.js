@@ -71,5 +71,51 @@ export const Logo = styled.h1`
 
 export const StyledLink = styled(Link)`
 	text-decoration: none;
+	outline: none;
 	color: #000;
+`;
+
+export const StyledLogoLink = styled(Link)`
+	text-decoration: none;
+	outline: none;
+
+	color: #fff;
+`;
+
+export const NotesNav = styled.nav`
+	background-color: transparent;
+	color: #000;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	box-sizing: border-box;
+	padding-top: 10px;
+	position: sticky;
+	top: 0;
+	/* width: 98%; */
+`;
+
+export const NavButton = styled.button`
+	border: none;
+	padding: 5px;
+	margin: 2px;
+	border-radius: 5px;
+	background-color: #fff;
+	font-weight: bold;
+	outline: none;
+	border: 2px solid #000;
+	cursor: pointer;
+`;
+
+export const SaveButton = styled.button`
+	padding: 5px;
+	margin: 2px 30px;
+	border-radius: 5px;
+	background-color: #fff;
+	font-weight: bold;
+	outline: none;
+	border: 2px solid #000;
+	cursor: pointer;
+	display: block;
+	/* float: right;  */
 `;
