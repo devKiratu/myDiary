@@ -45,3 +45,43 @@ export const Button = styled.button`
 	border-radius: 10px;
 	margin: 40px 0;
 `;
+
+export const NotesForm = styled.form`
+	margin: 0 auto;
+	border: 1px solid #dcdcdc;
+	box-shadow: 1px 5px 5px rgba(0, 0, 0, 0.2);
+	min-height: 95%;
+	border-radius: 10px;
+	box-sizing: border-box;
+`;
+
+export const NotesLabel = styled.label`
+	display: inline-block;
+	padding: 20px 10px;
+	/* width: 10%; */
+	text-align: left;
+	/* border: 1px solid #dcdcdc; */
+	border-radius: 5px;
+`;
+
+export const NotesInput = styled.input`
+	display: inline-block;
+
+	margin: 10px;
+	padding: 20px;
+	width: 85%;
+	border-radius: 5px;
+	border: 1px solid #dcdcdc;
+	background-color: rgb(223, 223, 223);
+`;
+
+export const TextArea = styled.textarea`
+	padding: 10px;
+	width: 95%;
+	height: 70vh;
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
+	border: 1px solid #dcdcdc;
+	border-radius: 5px;
+	background-color: rgb(223, 223, 223);
+`;
