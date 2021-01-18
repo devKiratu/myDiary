@@ -73,6 +73,7 @@ export default function EditModifyNote() {
 							? (e) => setEditTitle(e.target.value)
 							: (e) => setTitle(e.target.value)
 					}
+					required
 				/>
 				<TextArea
 					placeholder="Enter note content here"
@@ -82,6 +83,7 @@ export default function EditModifyNote() {
 							? (e) => setEditText(e.target.value)
 							: (e) => setText(e.target.value)
 					}
+					required
 				/>
 			</NotesForm>
 		</div>

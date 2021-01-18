@@ -6,7 +6,7 @@ export const ProfilePage = styled.div`
 `;
 
 export const NotesContainer = styled.div`
-	height: 90%;
+	height: 88%;
 	overflow-y: auto;
 	display: grid;
 	grid-template-columns: 1fr 2fr;
@@ -23,7 +23,7 @@ export const HistoryContainer = styled.div`
 `;
 
 export const StyledProfileNav = styled.nav`
-	height: 10%;
+	min-height: 10%;
 	background-color: #000;
 	color: #fff;
 	display: flex;
@@ -33,6 +33,14 @@ export const StyledProfileNav = styled.nav`
 	/* padding-top: 10px; */
 	position: sticky;
 	top: 0;
+
+	/* @media (max-width: 400px) {
+	} */
+	@media (max-width: 400px) {
+		display: inline-block;
+		width: 100vw;
+		position: unset;
+	}
 `;
 
 export const CardContent = styled.div`
