@@ -5,12 +5,17 @@ import { HistoryContainer } from "../styles/ProfileStyles";
 import HistoryCard from "./HistoryCard";
 
 function HistoryPanel() {
-	const { entries, toggleNoteEditor } = useContext(GlobalContext);
+	const { entries, toggleNoteEditor, displayNote } = useContext(GlobalContext);
+
+	function handleNewNote() {
+		displayNote(0);
+		toggleNoteEditor();
+	}
 
 	return (
 		<HistoryContainer>
 			<NotesNav>
-				<NavButton onClick={() => toggleNoteEditor()}>New Note</NavButton>
+				<NavButton onClick={handleNewNote}>New Note</NavButton>
 			</NotesNav>
 			{entries.map((entry) => (
 				<HistoryCard
