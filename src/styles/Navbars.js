@@ -83,7 +83,7 @@ export const StyledLogoLink = styled(Link)`
 `;
 
 export const NotesNav = styled.nav`
-	background-color: transparent;
+	background-color: #fff;
 	color: #000;
 	display: flex;
 	justify-content: flex-end;
@@ -93,6 +93,10 @@ export const NotesNav = styled.nav`
 	position: sticky;
 	top: 0;
 	/* width: 98%; */
+
+	/* @media (max-width: 400px) {
+		position: unset;
+	} */
 `;
 
 export const NavButton = styled.button`
