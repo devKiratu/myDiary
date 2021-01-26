@@ -25,10 +25,10 @@ function HistoryPanel() {
 			</NotesNav>
 			{entries.map((entry) => (
 				<HistoryCard
-					key={entry.id}
+					key={entry._id}
 					content={entry.content}
 					created={entry.created}
-					id={entry.id}
+					id={entry._id}
 					title={entry.title}
 				/>
 			))}

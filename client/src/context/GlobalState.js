@@ -41,9 +41,10 @@ export default function GlobalProvider({ children }) {
 	async function getEntries() {
 		const res = await fetch("/api/v1/entries");
 		const data = await res.json();
+		console.log(data);
 		dispatch({
 			type: "GET_ENTRIES",
-			payload: data,
+			payload: data.data,
 		});
 		console.log(data);
 	}

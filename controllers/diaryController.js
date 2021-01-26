@@ -1,13 +1,26 @@
 //import model
-const entries = require("../model/db");
+const Entry = require("../model/Entry");
 
 /*
   @desc     Get all entries
   @route    GET /api/v1/entries
   @access   Private
  */
-exports.getEntries = (req, res, next) => {
-	res.json(entries);
+exports.getEntries = async (req, res, next) => {
+	try {
+		const entries = await Entry.find();
+
+		return res.status(200).json({
+			success: true,
+			count: entries.length,
+			data: entries,
+		});
+	} catch (err) {
+		return res.status(500).json({
+			success: false,
+			error: "Server Error",
+		});
+	}
 };
 
 /*
@@ -15,14 +28,28 @@ exports.getEntries = (req, res, next) => {
   @route    GET /entries/:id
   @access   Private
  */
-exports.getSelectedEntry = (req, res, next) => {
-	const result = entries.filter(
-		(entry) => entry.id === parseInt(req.params.id)
-	);
-	// console.log(result);
-	result.length
-		? res.json(result)
-		: res.status(404).json({ alert: `no entry with id ${req.params.id}` });
+exports.getSelectedEntry = async (req, res, next) => {
+	try {
+		const entry = await Entry.findById(req.params.id);
+
+		if (!entry) {
+			return res.status(404).json({
+				success: false,
+				error: `Entry of id ${req.params.id} does not exist`,
+			});
+		}
+		return res.status(200).json({
+			success: true,
+			data: entry,
+		});
+	} catch (err) {
+		// console.log(err);
+		return res.status(500).json({
+			success: false,
+			error: "Server Error",
+			err,
+		});
+	}
 };
 
 /*
@@ -30,18 +57,30 @@ exports.getSelectedEntry = (req, res, next) => {
   @route    POST /entries
   @access   Private
  */
-exports.addEntry = (req, res, next) => {
-	if (!req.body.id || !req.body.title || !req.body.content) {
-		res
-			.status(500)
-			.json({ error: "new entry must contain an id, title and content" });
-	} else if (entries.map((entry) => entry.id).includes(req.body.id)) {
-		res
-			.status(403)
-			.json({ error: `note with id ${req.body.id} already exists` });
-	} else {
-		entries.push(req.body);
-		res.json({ success: "new entry added", entries });
+exports.addEntry = async (req, res, next) => {
+	try {
+		const { title, content } = req.body;
+
+		const newEntry = await Entry.create(req.body);
+
+		return res.status(201).json({
+			success: true,
+			data: newEntry,
+		});
+	} catch (err) {
+		if (err.name === "ValidationError") {
+			const messages = Object.values(err.errors).map((val) => val.message);
+
+			return res.status(400).json({
+				success: false,
+				error: messages,
+			});
+		} else {
+			return res.status(500).json({
+				success: false,
+				error: "Server Error",
+			});
+		}
 	}
 };
 
@@ -50,20 +89,40 @@ exports.addEntry = (req, res, next) => {
   @route    PUT /entries/:id
   @access   Private
  */
-exports.modifyEntry = (req, res, next) => {
-	const isEntryPresent = entries.some(
-		(entry) => entry.id === parseInt(req.params.id)
-	);
-	if (isEntryPresent) {
-		entries.map((entry) => {
-			if (entry.id === parseInt(req.params.id)) {
-				entry.title = req.body.title ? req.body.title : entry.title;
-				entry.content = req.body.content ? req.body.content : entry.content;
+exports.modifyEntry = async (req, res, next) => {
+	try {
+		const entry = await Entry.findById(req.params.id);
+
+		if (!entry) {
+			return res.status(404).json({
+				success: false,
+				error: `Entry of id ${req.params.id} does not exist`,
+			});
+		}
+
+		const modifiedEntry = {
+			title: req.body.title ? req.body.title : entry.title,
+			content: req.body.content ? req.body.content : entry.content,
+		};
+
+		await Entry.findByIdAndUpdate(
+			req.params.id,
+			modifiedEntry,
+			{ new: true },
+			(err, result) => {
+				return res.status(200).json({
+					success: true,
+					data: result,
+				});
 			}
+		);
+	} catch (err) {
+		// console.log(err);
+		return res.status(500).json({
+			success: false,
+			error: "Server Error",
+			err,
 		});
-		res.json({ success: `entry of id ${req.params.id} was updated.`, entries });
-	} else {
-		res.status(404).json({ alert: `no entry with id ${req.params.id}` });
 	}
 };
 
@@ -72,15 +131,27 @@ exports.modifyEntry = (req, res, next) => {
   @route    DELETE /entries/:id
   @access   Private
  */
-exports.deleteEntry = (req, res, next) => {
-	const result = entries.some((entry) => entry.id === parseInt(req.params.id));
-	// console.log(result);
-	result
-		? res.json({
-				success: `entry of id ${req.params.id} deleted`,
-				entries: entries.filter(
-					(entry) => entry.id !== parseInt(req.params.id)
-				),
-		  })
-		: res.status(404).json({ alert: `no entry with id ${req.params.id}` });
+exports.deleteEntry = async (req, res, next) => {
+	try {
+		const entry = await Entry.findById(req.params.id);
+
+		if (!entry) {
+			return res.status(404).json({
+				success: false,
+				error: `Entry of id ${req.params.id} does not exist`,
+			});
+		}
+
+		await entry.remove();
+
+		return res.status(200).json({
+			success: true,
+			data: {},
+		});
+	} catch (err) {
+		return res.status(500).json({
+			success: false,
+			error: "Server Error",
+		});
+	}
 };
