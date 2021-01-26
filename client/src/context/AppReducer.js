@@ -2,6 +2,11 @@
 
 export default function AppReducer(state, action) {
 	switch (action.type) {
+		case "GET_ENTRIES":
+			return {
+				...state,
+				entries: action.payload,
+			};
 		case "ADD_ENTRY":
 			return {
 				...state,

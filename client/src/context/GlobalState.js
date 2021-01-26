@@ -36,6 +36,18 @@ export const GlobalContext = createContext(initialState);
 export default function GlobalProvider({ children }) {
 	const [state, dispatch] = useReducer(AppReducer, initialState);
 
+	//Actions
+
+	async function getEntries() {
+		const res = await fetch("/api/v1/entries");
+		const data = await res.json();
+		dispatch({
+			type: "GET_ENTRIES",
+			payload: data,
+		});
+		console.log(data);
+	}
+
 	function addEntry(noteEntry) {
 		dispatch({
 			type: "ADD_ENTRY",
@@ -103,6 +115,7 @@ export default function GlobalProvider({ children }) {
 				entries: state.entries,
 				currentlyDisplayed: state.currentlyDisplayed,
 				noteEditor: state.noteEditor,
+				getEntries,
 				displayNote,
 				toggleNoteEditor,
 				addEntry,
