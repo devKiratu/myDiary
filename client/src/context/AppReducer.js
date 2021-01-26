@@ -20,7 +20,7 @@ export default function AppReducer(state, action) {
 		case "DELETE_ENTRY":
 			return {
 				...state,
-				entries: state.entries.filter((entry) => entry.id !== action.payload),
+				entries: state.entries.filter((entry) => entry._id !== action.payload),
 			};
 		case "TOGGLE_NOTE_EDITOR":
 			return {

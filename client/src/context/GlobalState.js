@@ -3,21 +3,7 @@ import AppReducer from "./AppReducer";
 
 //initial state
 const initialState = {
-	entries: [
-		// {
-		// 	content: `Click a note to display`,
-		// 	title: "",
-		// 	id: 0,
-		// },
-		// {
-		// 	id: 12,
-		// 	created: Date.now(),
-		// 	content: `
-		//           What is Lorem Ipsum?
-		//           Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-		//   `,
-		// },
-	],
+	entries: [],
 	currentlyDisplayed: {
 		text: `Click a note to display`,
 		title: "",
@@ -41,38 +27,77 @@ export default function GlobalProvider({ children }) {
 	async function getEntries() {
 		const res = await fetch("/api/v1/entries");
 		const data = await res.json();
-		console.log(data);
-		dispatch({
-			type: "GET_ENTRIES",
-			payload: data.data,
-		});
-		console.log(data);
+		// console.log(data);
+
+		dispatch({ type: "GET_ENTRIES", payload: data.data });
 	}
 
-	function addEntry(noteEntry) {
-		dispatch({
-			type: "ADD_ENTRY",
-			payload: noteEntry,
-		});
-	}
-
-	function modifyEntry(modifiedEntry, id) {
-		const unmodifiedEntries = state.entries.filter((entry) => entry.id !== id);
-		// console.log("unmodified entries are ", unmodifiedEntries);
-		const updatedEntries = [...unmodifiedEntries, modifiedEntry];
-
-		dispatch({
-			type: "MODIFY_ENTRY",
-			payload: updatedEntries,
-		});
-	}
-
-	function deleteEntry(id) {
-		if (id !== 0) {
-			dispatch({
-				type: "DELETE_ENTRY",
-				payload: id,
+	async function addEntry(noteEntry) {
+		try {
+			const res = await fetch("/api/v1/entries", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json; charset=UTF-8",
+				},
+				body: JSON.stringify(noteEntry),
 			});
+			const data = await res.json();
+			dispatch({
+				type: "ADD_ENTRY",
+				payload: data.data,
+			});
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
+	async function modifyEntry(modifiedEntry, id) {
+		try {
+			const res = await fetch(`/api/v1/entries/${id}`, {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json; charset=UTF-8",
+				},
+				body: JSON.stringify(modifiedEntry),
+			});
+			const data = await res.json();
+			// console.log(data.data);
+
+			const updatedEntries = state.entries.map((entry) => {
+				if (entry._id === id) {
+					entry.title = data.data.title ? data.data.title : entry.title;
+					entry.content = data.data.content ? data.data.content : entry.content;
+					return entry;
+				} else {
+					return entry;
+				}
+			});
+
+			dispatch({
+				type: "MODIFY_ENTRY",
+				payload: updatedEntries,
+			});
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
+	async function deleteEntry(id) {
+		try {
+			if (id !== 0) {
+				// const res =
+				await fetch(`/api/v1/entries/${id}`, {
+					method: "DELETE",
+				});
+				// const data = await res.text();
+				// console.log(data);
+				dispatch({
+					type: "DELETE_ENTRY",
+					payload: id,
+				});
+			}
+		} catch (err) {
+			console.log(err);
 		}
 	}
 
@@ -85,18 +110,18 @@ export default function GlobalProvider({ children }) {
 				payload: {
 					text: `Click a note to display`,
 					title: "",
-					id: 0,
+					_id: 0,
 				},
 			});
 		} else {
-			const [selectedEntry] = state.entries.filter((entry) => entry.id === id);
+			const [selectedEntry] = state.entries.filter((entry) => entry._id === id);
 			// console.log("2nd option current entries are", state.entries);
 			dispatch({
 				type: "SET_CURRENTLY_DISPLAYED",
 				payload: {
 					text: selectedEntry.content,
 					title: selectedEntry.title,
-					id: selectedEntry.id,
+					_id: selectedEntry._id,
 					created: selectedEntry.created,
 				},
 			});
