@@ -2,6 +2,11 @@
 
 export default function AppReducer(state, action) {
 	switch (action.type) {
+		case "GET_ENTRIES":
+			return {
+				...state,
+				entries: action.payload,
+			};
 		case "ADD_ENTRY":
 			return {
 				...state,
@@ -15,7 +20,7 @@ export default function AppReducer(state, action) {
 		case "DELETE_ENTRY":
 			return {
 				...state,
-				entries: state.entries.filter((entry) => entry.id !== action.payload),
+				entries: state.entries.filter((entry) => entry._id !== action.payload),
 			};
 		case "TOGGLE_NOTE_EDITOR":
 			return {

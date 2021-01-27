@@ -13,12 +13,12 @@ function DisplayCard() {
 
 	function handleDelete(e) {
 		// console.log("the id is ", currentlyDisplayed.id);
-		deleteEntry(currentlyDisplayed.id);
+		deleteEntry(currentlyDisplayed._id);
 		displayNote(0);
 	}
 
 	function handleEdit() {
-		if (currentlyDisplayed.id !== 0) {
+		if (currentlyDisplayed._id !== 0) {
 			toggleNoteEditor();
 			// console.log("modify note whose id is", currentlyDisplayed.id);
 		}

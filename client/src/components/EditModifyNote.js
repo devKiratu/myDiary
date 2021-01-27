@@ -22,12 +22,10 @@ export default function EditModifyNote() {
 	const [editTitle, setEditTitle] = useState(currentlyDisplayed.title);
 	const [EditText, setEditText] = useState(currentlyDisplayed.text);
 	// console.log("I've opened to modify note of id", currentlyDisplayed.id);
-	const ids = entries.map((entry) => entry.id);
+	const ids = entries.map((entry) => entry._id);
 
 	function handleNewEntry() {
 		const newEntry = {
-			id: Date.now(),
-			created: Date.now(),
 			title: title,
 			content: text,
 		};
@@ -38,20 +36,20 @@ export default function EditModifyNote() {
 
 	function handleModifyEntry() {
 		const modifiedEntry = {
-			id: currentlyDisplayed.id,
+			_id: currentlyDisplayed._id,
 			created: currentlyDisplayed.created,
 			title: editTitle,
 			content: EditText,
 		};
 
-		modifyEntry(modifiedEntry, currentlyDisplayed.id);
+		modifyEntry(modifiedEntry, currentlyDisplayed._id);
 		toggleNoteEditor();
 		displayNote(0);
 	}
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		ids.includes(currentlyDisplayed.id)
+		ids.includes(currentlyDisplayed._id)
 			? handleModifyEntry()
 			: handleNewEntry();
 	}
@@ -67,9 +65,9 @@ export default function EditModifyNote() {
 				<NotesInput
 					type="text"
 					placeholder="Enter note title here"
-					value={ids.includes(currentlyDisplayed.id) ? editTitle : title}
+					value={ids.includes(currentlyDisplayed._id) ? editTitle : title}
 					onChange={
-						ids.includes(currentlyDisplayed.id)
+						ids.includes(currentlyDisplayed._id)
 							? (e) => setEditTitle(e.target.value)
 							: (e) => setTitle(e.target.value)
 					}
@@ -77,9 +75,9 @@ export default function EditModifyNote() {
 				/>
 				<TextArea
 					placeholder="Enter note content here"
-					value={ids.includes(currentlyDisplayed.id) ? EditText : text}
+					value={ids.includes(currentlyDisplayed._id) ? EditText : text}
 					onChange={
-						ids.includes(currentlyDisplayed.id)
+						ids.includes(currentlyDisplayed._id)
 							? (e) => setEditText(e.target.value)
 							: (e) => setText(e.target.value)
 					}
