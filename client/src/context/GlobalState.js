@@ -47,7 +47,7 @@ export default function GlobalProvider({ children }) {
 				payload: data.data,
 			});
 		} catch (err) {
-			console.log(err);
+			console.log("the error is ", err);
 		}
 	}
 
