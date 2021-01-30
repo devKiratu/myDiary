@@ -1,6 +1,9 @@
+const mongoose = require("mongoose");
 //import model
-const Entry = require("../model/Entry");
+const entrySchema = require("../model/Entry");
+const User = require("../model/User");
 
+let Entry = mongoose.model("Entry", entrySchema);
 /*
   @desc     Get all entries
   @route    GET /api/v1/entries
