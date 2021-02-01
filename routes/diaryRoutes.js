@@ -7,11 +7,15 @@ const {
 	deleteEntry,
 	getSelectedEntry,
 } = require("../controllers/diaryController");
-const { addNewUser } = require("../controllers/userController");
+const { addNewUser, loginUser } = require("../controllers/userController");
 
 // @desc    Sign up - add new user
 //@route    Post /api/v1/signup
 router.post("/signup", addNewUser);
+
+// @desc    Login for registered users
+//@route    Post /api/v1/auth
+router.post("/auth", loginUser);
 
 // @desc    Display all entries
 //@route    GET /entries
