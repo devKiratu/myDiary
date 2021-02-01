@@ -5,12 +5,13 @@ function auth(req, res, next) {
 	const token = req.header("x-auth-token");
 
 	//check for token
-	if (!token) res.status(401).json({ msg: "Unauthorized, access denied" });
+	if (!token)
+		return res.status(401).json({ msg: "Unauthorized, access denied" });
 
 	try {
 		//verify token
 		const decoded = jwt.verify(token, process.env.JWT_SECRET);
-		console.log("the value of decoded is: ", decoded);
+		// console.log("the value of decoded is: ", decoded);
 
 		//add user from payload
 		req.user = decoded;

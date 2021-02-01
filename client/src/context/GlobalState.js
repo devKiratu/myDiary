@@ -25,9 +25,15 @@ export default function GlobalProvider({ children }) {
 	//Actions
 
 	async function getEntries() {
-		const res = await fetch("/api/v1/entries");
+		const res = await fetch("/api/v1/entries", {
+			method: "GET",
+			headers: {
+				"x-auth-token":
+					"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwMTU4NDRmMDE1NmNhNGVlNDkwNjBlZSIsImlhdCI6MTYxMjE2MzQ1N30.l48cGcEGvMgceFgb1e6CTOCXqe-WMOvTZKuptQzJ-rQ",
+			},
+		});
 		const data = await res.json();
-		// console.log(data);
+		console.log(data);
 
 		dispatch({ type: "GET_ENTRIES", payload: data.data });
 	}
