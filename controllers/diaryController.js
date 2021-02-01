@@ -5,13 +5,13 @@ const User = require("../model/User");
 
 let Entry = mongoose.model("Entry", entrySchema);
 /*
-  @desc     Get all entries
+  @desc     Get all entries by a user
   @route    GET /api/v1/entries
   @access   Private
  */
 exports.getEntries = async (req, res, next) => {
 	try {
-		const entries = await Entry.find();
+		const entries = await User.findById(req.user.id);
 
 		return res.status(200).json({
 			success: true,
