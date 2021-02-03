@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
 	Form,
 	FormContainer,
@@ -13,7 +13,7 @@ import { GlobalContext } from "../../context/GlobalState";
 import { useHistory } from "react-router-dom";
 
 function SignIn() {
-	const { loginUser, isAuth } = useContext(GlobalContext);
+	const { loginUser, isAuth, checkIsAuth } = useContext(GlobalContext);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const history = useHistory();
@@ -32,14 +32,19 @@ function SignIn() {
 		setEmail("");
 		setPassword("");
 		redirectUser();
+		checkIsAuth();
 	}
+	useEffect(() => {
+		checkIsAuth();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<FormContainer>
 			<LandingNav />
 			<Form onSubmit={handleLogin}>
 				<Logo>myDiary</Logo>
-				<Message>Welcome Back! </Message>
+				<Message>Welcome Back! Log in to continue... </Message>
 				<Label htmlFor="email">Email</Label>
 				<Input
 					type="email"

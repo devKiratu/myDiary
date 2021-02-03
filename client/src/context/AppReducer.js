@@ -2,9 +2,10 @@
 
 export default function AppReducer(state, action) {
 	switch (action.type) {
-		case "APP_LOADING":
+		case "USER_ACTIVE":
 			return {
 				...state,
+				isAuth: true,
 			};
 		case "LOGIN_SUCCESS":
 			localStorage.setItem("token", action.payload.token);

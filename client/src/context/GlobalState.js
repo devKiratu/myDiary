@@ -34,20 +34,48 @@ export default function GlobalProvider({ children }) {
 
 	//Actions
 
+	function checkIsAuth() {
+		const setToken = localStorage.getItem("token");
+		console.log("the value of set token is", setToken);
+		if (setToken !== null) {
+			dispatch({ type: "USER_ACTIVE" });
+		} else {
+			dispatch({ type: "LOGOUT_SUCCESS" });
+		}
+	}
+
+	async function signUp(credentials) {
+		try {
+			const res = await fetch("/api/v1/signup", {
+				method: "POST",
+				headers: headersConfig.headers,
+				body: JSON.stringify(credentials),
+			});
+			const data = await res.json();
+			console.log(data);
+		} catch (err) {
+			dispatch({ type: "AUTH_ERROR" });
+		}
+	}
+
 	async function loginUser(credentials) {
-		const res = await fetch("/api/v1/auth", {
-			method: "POST",
-			headers: headersConfig.headers,
-			body: JSON.stringify(credentials),
-		});
-		const data = await res.json();
-		console.log(data.user);
-		dispatch({
-			type: "LOGIN_SUCCESS",
-			payload: {
-				token: data.user.token,
-			},
-		});
+		try {
+			const res = await fetch("/api/v1/auth", {
+				method: "POST",
+				headers: headersConfig.headers,
+				body: JSON.stringify(credentials),
+			});
+			const data = await res.json();
+			// console.log(data.user);
+			dispatch({
+				type: "LOGIN_SUCCESS",
+				payload: {
+					token: data.user.token,
+				},
+			});
+		} catch (err) {
+			dispatch({ type: "AUTH_ERROR" });
+		}
 	}
 
 	async function logoutUser() {
@@ -75,9 +103,14 @@ export default function GlobalProvider({ children }) {
 				body: JSON.stringify(noteEntry),
 			});
 			const data = await res.json();
+			// console.log("the data is", data);
+			// console.log("new entry data is ", data.data.entries);
+			const notes = data.data.entries;
+			const newEntry = notes[notes.length - 1];
+			console.log("new entry is ", newEntry);
 			dispatch({
 				type: "ADD_ENTRY",
-				payload: data.data,
+				payload: newEntry,
 			});
 		} catch (err) {
 			console.log("the error is ", err);
@@ -92,17 +125,21 @@ export default function GlobalProvider({ children }) {
 				body: JSON.stringify(modifiedEntry),
 			});
 			const data = await res.json();
-			// console.log(data.data);
+			// console.log("received data is ", data.saved.entries);
+			const [modified] = data.saved.entries.filter((item) => item._id === id);
+			console.log("the modified entry is", modified);
+			console.log("the title is", modified.title);
 
 			const updatedEntries = state.entries.map((entry) => {
 				if (entry._id === id) {
-					entry.title = data.data.title ? data.data.title : entry.title;
-					entry.content = data.data.content ? data.data.content : entry.content;
+					entry.title = modified.title ? modified.title : entry.title;
+					entry.content = modified.content ? modified.content : entry.content;
 					return entry;
 				} else {
 					return entry;
 				}
 			});
+			console.log("updated entries are ", updatedEntries);
 
 			dispatch({
 				type: "MODIFY_ENTRY",
@@ -182,6 +219,8 @@ export default function GlobalProvider({ children }) {
 				deleteEntry,
 				loginUser,
 				logoutUser,
+				signUp,
+				checkIsAuth,
 			}}
 		>
 			{children}
