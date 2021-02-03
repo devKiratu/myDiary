@@ -10,7 +10,12 @@ import {
 import { StyledProfileNav } from "../styles/ProfileStyles";
 
 function ProfileNav() {
-	const { entries } = useContext(GlobalContext);
+	const { entries, logoutUser } = useContext(GlobalContext);
+
+	function handleLogout() {
+		logoutUser();
+	}
+
 	return (
 		<StyledProfileNav>
 			<div>
@@ -22,7 +27,7 @@ function ProfileNav() {
 				<Message>Total Notes: {entries.length} </Message>
 				<Message>Settings</Message>
 				<StyledLink to="/">
-					<SignUpButton>Logout</SignUpButton>
+					<SignUpButton onClick={handleLogout}>Logout</SignUpButton>
 				</StyledLink>
 			</div>
 		</StyledProfileNav>

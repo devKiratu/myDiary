@@ -17,8 +17,8 @@ function LandingNav() {
 				</StyledLink>
 			</div>
 			<div>
-				<StyledLink to="/features">
-					<Message>Features</Message>
+				<StyledLink to="/profile">
+					<Message>Profile</Message>
 				</StyledLink>
 				<StyledLink to="/contact">
 					<Message>Contact</Message>

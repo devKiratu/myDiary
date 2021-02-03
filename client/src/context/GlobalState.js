@@ -3,6 +3,8 @@ import AppReducer from "./AppReducer";
 
 //initial state
 const initialState = {
+	token: localStorage.getItem("token"),
+	isAuth: false,
 	entries: [],
 	currentlyDisplayed: {
 		text: `Click a note to display`,
@@ -22,18 +24,45 @@ export const GlobalContext = createContext(initialState);
 export default function GlobalProvider({ children }) {
 	const [state, dispatch] = useReducer(AppReducer, initialState);
 
+	//helper for header configuration
+	const headersConfig = {
+		headers: {
+			"Content-Type": "application/json; charset=UTF-8",
+		},
+	};
+	if (state.token) headersConfig.headers["x-auth-token"] = state.token;
+
 	//Actions
+
+	async function loginUser(credentials) {
+		const res = await fetch("/api/v1/auth", {
+			method: "POST",
+			headers: headersConfig.headers,
+			body: JSON.stringify(credentials),
+		});
+		const data = await res.json();
+		console.log(data.user);
+		dispatch({
+			type: "LOGIN_SUCCESS",
+			payload: {
+				token: data.user.token,
+			},
+		});
+	}
+
+	async function logoutUser() {
+		dispatch({
+			type: "LOGOUT_SUCCESS",
+		});
+	}
 
 	async function getEntries() {
 		const res = await fetch("/api/v1/entries", {
 			method: "GET",
-			headers: {
-				"x-auth-token":
-					"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwMTU4NDRmMDE1NmNhNGVlNDkwNjBlZSIsImlhdCI6MTYxMjE2MzQ1N30.l48cGcEGvMgceFgb1e6CTOCXqe-WMOvTZKuptQzJ-rQ",
-			},
+			headers: headersConfig.headers,
 		});
 		const data = await res.json();
-		console.log(data);
+		// console.log(data);
 
 		dispatch({ type: "GET_ENTRIES", payload: data.data });
 	}
@@ -42,9 +71,7 @@ export default function GlobalProvider({ children }) {
 		try {
 			const res = await fetch("/api/v1/entries", {
 				method: "POST",
-				headers: {
-					"Content-Type": "application/json; charset=UTF-8",
-				},
+				headers: headersConfig.headers,
 				body: JSON.stringify(noteEntry),
 			});
 			const data = await res.json();
@@ -61,9 +88,7 @@ export default function GlobalProvider({ children }) {
 		try {
 			const res = await fetch(`/api/v1/entries/${id}`, {
 				method: "PUT",
-				headers: {
-					"Content-Type": "application/json; charset=UTF-8",
-				},
+				headers: headersConfig.headers,
 				body: JSON.stringify(modifiedEntry),
 			});
 			const data = await res.json();
@@ -94,6 +119,7 @@ export default function GlobalProvider({ children }) {
 				// const res =
 				await fetch(`/api/v1/entries/${id}`, {
 					method: "DELETE",
+					headers: headersConfig.headers,
 				});
 				// const data = await res.text();
 				// console.log(data);
@@ -147,12 +173,15 @@ export default function GlobalProvider({ children }) {
 				entries: state.entries,
 				currentlyDisplayed: state.currentlyDisplayed,
 				noteEditor: state.noteEditor,
+				isAuth: state.isAuth,
 				getEntries,
 				displayNote,
 				toggleNoteEditor,
 				addEntry,
 				modifyEntry,
 				deleteEntry,
+				loginUser,
+				logoutUser,
 			}}
 		>
 			{children}

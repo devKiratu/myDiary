@@ -2,6 +2,26 @@
 
 export default function AppReducer(state, action) {
 	switch (action.type) {
+		case "APP_LOADING":
+			return {
+				...state,
+			};
+		case "LOGIN_SUCCESS":
+			localStorage.setItem("token", action.payload.token);
+			return {
+				...state,
+				isAuth: true,
+				token: action.payload.token,
+			};
+		case "LOGOUT_SUCCESS":
+		case "AUTH_ERROR":
+			localStorage.removeItem("token");
+			return {
+				...state,
+				entries: [],
+				token: null,
+				isAuth: false,
+			};
 		case "GET_ENTRIES":
 			return {
 				...state,

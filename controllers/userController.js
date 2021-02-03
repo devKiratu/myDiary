@@ -106,3 +106,13 @@ exports.loginUser = async (req, res, next) => {
 		}
 	}
 };
+
+exports.loadUser = async (req, res, next) => {
+	try {
+		const user = await User.findById(req.user.id).select("-password");
+		if (!user) throw Error("User does not exist");
+		res.json(user);
+	} catch (err) {
+		res.status(400).json({ msg: err.message });
+	}
+};
