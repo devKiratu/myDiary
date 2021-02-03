@@ -5,6 +5,7 @@ import AppReducer from "./AppReducer";
 const initialState = {
 	token: localStorage.getItem("token"),
 	isAuth: false,
+	user: "",
 	entries: [],
 	currentlyDisplayed: {
 		text: `Click a note to display`,
@@ -71,6 +72,7 @@ export default function GlobalProvider({ children }) {
 				type: "LOGIN_SUCCESS",
 				payload: {
 					token: data.user.token,
+					user: data.user.username,
 				},
 			});
 		} catch (err) {
@@ -211,6 +213,7 @@ export default function GlobalProvider({ children }) {
 				currentlyDisplayed: state.currentlyDisplayed,
 				noteEditor: state.noteEditor,
 				isAuth: state.isAuth,
+				user: state.user,
 				getEntries,
 				displayNote,
 				toggleNoteEditor,

@@ -13,6 +13,7 @@ export default function AppReducer(state, action) {
 				...state,
 				isAuth: true,
 				token: action.payload.token,
+				user: action.payload.user,
 			};
 		case "LOGOUT_SUCCESS":
 		case "AUTH_ERROR":
@@ -22,6 +23,7 @@ export default function AppReducer(state, action) {
 				entries: [],
 				token: null,
 				isAuth: false,
+				user: "",
 			};
 		case "GET_ENTRIES":
 			return {
