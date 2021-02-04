@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import {
 	Form,
 	FormContainer,
@@ -13,17 +13,14 @@ import { GlobalContext } from "../../context/GlobalState";
 import { useHistory } from "react-router-dom";
 
 function SignIn() {
-	const { loginUser, isAuth, checkIsAuth } = useContext(GlobalContext);
+	const { loginUser, isAuth, redirectUser, loading, isLoading } = useContext(
+		GlobalContext
+	);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const history = useHistory();
 
-	async function redirectUser() {
-		(await isAuth) ? history.push("/profile") : history.push("/");
-	}
-
-	function handleLogin(e) {
-		e.preventDefault();
+	function login() {
 		const credentials = {
 			email,
 			password,
@@ -31,13 +28,14 @@ function SignIn() {
 		loginUser(credentials);
 		setEmail("");
 		setPassword("");
-		redirectUser();
-		checkIsAuth();
 	}
-	useEffect(() => {
-		checkIsAuth();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+
+	function handleLogin(e) {
+		e.preventDefault();
+		loading();
+		login();
+		redirectUser(isLoading, isAuth, history);
+	}
 
 	return (
 		<FormContainer>

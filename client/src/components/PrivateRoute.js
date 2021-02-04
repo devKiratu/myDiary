@@ -1,14 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Redirect, Route } from "react-router-dom";
-import { GlobalContext } from "../context/GlobalState";
 
 function PrivateRoute({ children, ...rest }) {
-	const { isAuth } = useContext(GlobalContext);
+	const setToken = localStorage.getItem("token");
 	return (
 		<Route
 			{...rest}
 			render={({ location }) =>
-				isAuth ? (
+				setToken !== null ? (
 					children
 				) : (
 					<Redirect to={{ pathname: "/signin", state: { location } }} />

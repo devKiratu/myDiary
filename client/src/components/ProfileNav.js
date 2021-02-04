@@ -1,14 +1,17 @@
 import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalState";
 import { Message } from "../styles/LandingPageStyles";
-import { Logo, SignUpButton, StyledLink } from "../styles/Navbars";
+import { Logo, SignUpButton } from "../styles/Navbars";
 import { StyledProfileNav } from "../styles/ProfileStyles";
 
 function ProfileNav() {
 	const { entries, logoutUser, user } = useContext(GlobalContext);
+	const history = useHistory();
 
 	function handleLogout() {
 		logoutUser();
+		history.push("/");
 	}
 
 	return (
@@ -30,9 +33,9 @@ function ProfileNav() {
 			<div>
 				<Message>Total Notes: {entries.length} </Message>
 				<Message>Settings</Message>
-				<StyledLink to="/">
-					<SignUpButton onClick={handleLogout}>Logout</SignUpButton>
-				</StyledLink>
+				{/* <StyledLink to="/"> */}
+				<SignUpButton onClick={handleLogout}>Logout</SignUpButton>
+				{/* </StyledLink> */}
 			</div>
 		</StyledProfileNav>
 	);

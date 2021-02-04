@@ -10,12 +10,14 @@ import { Logo } from "../../styles/Navbars";
 import { Message } from "../../styles/LandingPageStyles";
 import LandingNav from "../LandingNav";
 import { GlobalContext } from "../../context/GlobalState";
+import { useHistory } from "react-router-dom";
 
-function SignIn() {
-	const { signUp } = useContext(GlobalContext);
+function SignUp() {
+	const { signUp, loading } = useContext(GlobalContext);
 	const [username, setUserName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const history = useHistory();
 
 	function handleSignup(e) {
 		e.preventDefault();
@@ -28,6 +30,8 @@ function SignIn() {
 		setUserName("");
 		setEmail("");
 		setPassword("");
+		loading();
+		history.push("/verify-register");
 	}
 
 	return (
@@ -66,4 +70,4 @@ function SignIn() {
 	);
 }
 
-export default SignIn;
+export default SignUp;

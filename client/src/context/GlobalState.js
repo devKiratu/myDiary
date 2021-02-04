@@ -5,6 +5,8 @@ import AppReducer from "./AppReducer";
 const initialState = {
 	token: localStorage.getItem("token"),
 	isAuth: false,
+	isLoading: false,
+	// isRegistered: false,
 	user: "",
 	entries: [],
 	currentlyDisplayed: {
@@ -33,15 +35,44 @@ export default function GlobalProvider({ children }) {
 	};
 	if (state.token) headersConfig.headers["x-auth-token"] = state.token;
 
-	//Actions
+	//Helpers
+	function redirectUser(isLoading, isAuth, history) {
+		// const setToken = localStorage.getItem("token");
+
+		!isLoading ? history.push("/loading") : history.push("/profile");
+		// isLoading ? history.push("/contact") : history.push("/profile");
+	}
+
+	function loading() {
+		dispatch({ type: "LOADING" });
+	}
 
 	function checkIsAuth() {
 		const setToken = localStorage.getItem("token");
-		console.log("the value of set token is", setToken);
+		// console.log("the value of set token is", setToken);
 		if (setToken !== null) {
 			dispatch({ type: "USER_ACTIVE" });
+			loadUser();
 		} else {
 			dispatch({ type: "LOGOUT_SUCCESS" });
+		}
+	}
+
+	//Actions
+	async function loadUser() {
+		try {
+			const res = await fetch("/api/v1/auth/user", {
+				method: "GET",
+				headers: headersConfig.headers,
+			});
+			const user = await res.json();
+			// console.log( "the active user is", user.username );
+			dispatch({
+				type: "USER_LOADED",
+				payload: user.username,
+			});
+		} catch (err) {
+			dispatch({ type: "AUTH_FAIL" });
 		}
 	}
 
@@ -53,7 +84,8 @@ export default function GlobalProvider({ children }) {
 				body: JSON.stringify(credentials),
 			});
 			const data = await res.json();
-			console.log(data);
+			// console.log(data);
+			dispatch({ type: "REGISTER_SUCCESS", payload: data });
 		} catch (err) {
 			dispatch({ type: "AUTH_ERROR" });
 		}
@@ -109,7 +141,7 @@ export default function GlobalProvider({ children }) {
 			// console.log("new entry data is ", data.data.entries);
 			const notes = data.data.entries;
 			const newEntry = notes[notes.length - 1];
-			console.log("new entry is ", newEntry);
+			// console.log("new entry is ", newEntry);
 			dispatch({
 				type: "ADD_ENTRY",
 				payload: newEntry,
@@ -129,8 +161,8 @@ export default function GlobalProvider({ children }) {
 			const data = await res.json();
 			// console.log("received data is ", data.saved.entries);
 			const [modified] = data.saved.entries.filter((item) => item._id === id);
-			console.log("the modified entry is", modified);
-			console.log("the title is", modified.title);
+			// console.log("the modified entry is", modified);
+			// console.log("the title is", modified.title);
 
 			const updatedEntries = state.entries.map((entry) => {
 				if (entry._id === id) {
@@ -141,7 +173,7 @@ export default function GlobalProvider({ children }) {
 					return entry;
 				}
 			});
-			console.log("updated entries are ", updatedEntries);
+			// console.log("updated entries are ", updatedEntries);
 
 			dispatch({
 				type: "MODIFY_ENTRY",
@@ -214,6 +246,7 @@ export default function GlobalProvider({ children }) {
 				noteEditor: state.noteEditor,
 				isAuth: state.isAuth,
 				user: state.user,
+				isLoading: state.isLoading,
 				getEntries,
 				displayNote,
 				toggleNoteEditor,
@@ -223,7 +256,10 @@ export default function GlobalProvider({ children }) {
 				loginUser,
 				logoutUser,
 				signUp,
+				loadUser,
 				checkIsAuth,
+				redirectUser,
+				loading,
 			}}
 		>
 			{children}

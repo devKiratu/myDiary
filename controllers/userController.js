@@ -72,7 +72,7 @@ exports.loginUser = async (req, res, next) => {
 
 		//check if password is valid
 		const isValidPwd = bcrypt.compareSync(password, user.password);
-		console.log(isValidPwd);
+		// console.log(isValidPwd);
 
 		if (!isValidPwd)
 			return res.status(400).json({ success: false, msg: "invalid password" });
