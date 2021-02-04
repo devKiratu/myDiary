@@ -1,29 +1,41 @@
 import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalState";
 import { Message } from "../styles/LandingPageStyles";
-import {
-	Logo,
-	SignUpButton,
-	StyledLogoLink,
-	StyledLink,
-} from "../styles/Navbars";
+import { Logo, SignUpButton } from "../styles/Navbars";
 import { StyledProfileNav } from "../styles/ProfileStyles";
 
 function ProfileNav() {
-	const { entries } = useContext(GlobalContext);
+	const { entries, logoutUser, user } = useContext(GlobalContext);
+	const history = useHistory();
+
+	function handleLogout() {
+		logoutUser();
+		history.push("/");
+	}
+
 	return (
 		<StyledProfileNav>
 			<div>
-				<StyledLogoLink to="/">
-					<Logo>myDiary</Logo>
-				</StyledLogoLink>
+				{/* <StyledLogoLink to="/"> */}
+				<Logo>
+					<span style={{ textDecorationLine: "overline" }}>
+						{user.toLowerCase()}'s Diary
+					</span>
+				</Logo>
+				{/* </StyledLogoLink> */}
 			</div>
+			{/* <div>
+				<Message>
+					<span style={{ color: "yellow" }}>{user.toUpperCase()}'s Diary</span>
+				</Message>
+			</div> */}
 			<div>
 				<Message>Total Notes: {entries.length} </Message>
 				<Message>Settings</Message>
-				<StyledLink to="/">
-					<SignUpButton>Logout</SignUpButton>
-				</StyledLink>
+				{/* <StyledLink to="/"> */}
+				<SignUpButton onClick={handleLogout}>Logout</SignUpButton>
+				{/* </StyledLink> */}
 			</div>
 		</StyledProfileNav>
 	);

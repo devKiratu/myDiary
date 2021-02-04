@@ -1,6 +1,11 @@
 import React from "react";
 import { Container, Hero, Message } from "../styles/LandingPageStyles";
-import { Header, SignInButton, SignUpButton } from "../styles/Navbars";
+import {
+	Header,
+	SignInButton,
+	SignUpButton,
+	StyledLink,
+} from "../styles/Navbars";
 import LandingNav from "./LandingNav";
 
 function LandingHero() {
@@ -19,8 +24,12 @@ function LandingHero() {
 				</div>
 				<div>
 					<Header>Get Started</Header>
-					<SignInButton>Sign In Here</SignInButton> |
-					<SignUpButton>Sign Up Here</SignUpButton>
+					<StyledLink to="/signin">
+						<SignInButton>Sign In Here</SignInButton> |
+					</StyledLink>
+					<StyledLink to="/signup">
+						<SignUpButton>Sign Up Here</SignUpButton>
+					</StyledLink>
 				</div>
 			</Container>
 		</Hero>

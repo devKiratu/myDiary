@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { withRouter } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalState";
 import { NotesContainer, ProfilePage } from "../styles/ProfileStyles";
 import DisplayPanel from "./DisplayPanel";
@@ -19,4 +20,4 @@ function Profile() {
 	);
 }
 
-export default Profile;
+export default withRouter(Profile);

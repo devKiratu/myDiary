@@ -23,6 +23,7 @@ function HistoryPanel() {
 			<NotesNav>
 				<NavButton onClick={handleNewNote}>New Note</NavButton>
 			</NotesNav>
+			{/* {console.log("entries are ", entries)} */}
 			{entries.map((entry) => (
 				<HistoryCard
 					key={entry._id}

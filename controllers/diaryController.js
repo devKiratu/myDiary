@@ -1,19 +1,23 @@
+const mongoose = require("mongoose");
 //import model
-const Entry = require("../model/Entry");
+const entrySchema = require("../model/Entry");
+const { findByIdAndUpdate } = require("../model/User");
+const User = require("../model/User");
 
+let Entry = mongoose.model("Entry", entrySchema);
 /*
-  @desc     Get all entries
+  @desc     Get all entries by a user
   @route    GET /api/v1/entries
   @access   Private
  */
 exports.getEntries = async (req, res, next) => {
 	try {
-		const entries = await Entry.find();
+		const entries = await User.findById(req.user.id);
 
 		return res.status(200).json({
 			success: true,
 			count: entries.length,
-			data: entries,
+			data: entries.entries,
 		});
 	} catch (err) {
 		return res.status(500).json({
@@ -30,20 +34,26 @@ exports.getEntries = async (req, res, next) => {
  */
 exports.getSelectedEntry = async (req, res, next) => {
 	try {
-		const entry = await Entry.findById(req.params.id);
-
+		// const user = await User.findById(req.user.id);
+		const entry = await User.findById(req.user.id);
+		// console.log(entry);
 		if (!entry) {
 			return res.status(404).json({
 				success: false,
 				error: `Entry of id ${req.params.id} does not exist`,
 			});
 		}
+		const { entries } = entry;
+		const requiredEntry = entries.filter((item) => item.id === req.params.id);
+		// console.log(entries);
+		// console.log(requiredEntry);
+
 		return res.status(200).json({
 			success: true,
-			data: entry,
+			data: requiredEntry,
 		});
 	} catch (err) {
-		// console.log(err);
+		console.log(err);
 		return res.status(500).json({
 			success: false,
 			error: "Server Error",
@@ -61,11 +71,19 @@ exports.addEntry = async (req, res, next) => {
 	try {
 		const { title, content } = req.body;
 
-		const newEntry = await Entry.create(req.body);
+		const createdEntry = await User.findByIdAndUpdate(
+			req.user.id,
+			{ $push: { entries: req.body } },
+			{ new: true }
+		);
+
+		// console.log(createdEntry);
+
+		// const newEntry = await Entry.create( req.body );
 
 		return res.status(201).json({
 			success: true,
-			data: newEntry,
+			data: createdEntry,
 		});
 	} catch (err) {
 		if (err.name === "ValidationError") {
@@ -79,6 +97,7 @@ exports.addEntry = async (req, res, next) => {
 			return res.status(500).json({
 				success: false,
 				error: "Server Error",
+				err,
 			});
 		}
 	}
@@ -91,33 +110,54 @@ exports.addEntry = async (req, res, next) => {
  */
 exports.modifyEntry = async (req, res, next) => {
 	try {
-		const entry = await Entry.findById(req.params.id);
+		const user = await User.findById(req.user.id);
 
-		if (!entry) {
-			return res.status(404).json({
-				success: false,
-				error: `Entry of id ${req.params.id} does not exist`,
-			});
-		}
+		const entries = user.entries;
+		// console.log(entries);
 
-		const modifiedEntry = {
-			title: req.body.title ? req.body.title : entry.title,
-			content: req.body.content ? req.body.content : entry.content,
-		};
-
-		await Entry.findByIdAndUpdate(
-			req.params.id,
-			modifiedEntry,
-			{ new: true },
-			(err, result) => {
-				return res.status(200).json({
-					success: true,
-					data: result,
-				});
+		entries.map((entry) => {
+			if (entry.id === req.params.id) {
+				entry.title = req.body.title ? req.body.title : entry.title;
+				entry.content = req.body.content ? req.body.content : entry.content;
+				return entry;
 			}
-		);
+			return entry;
+		});
+
+		const saved = await user.save();
+		// console.log(saved);
+
+		return res.status(200).json({
+			success: true,
+			saved,
+		});
+
+		// const entry = await Entry.findById(req.params.id);
+		// if (!entry) {
+		// 	return res.status(404).json({
+		// 		success: false,
+		// 		error: `Entry of id ${req.params.id} does not exist`,
+		// 	});
+		// }
+
+		// const modifiedEntry = {
+		// 	title: req.body.title ? req.body.title : entry.title,
+		// 	content: req.body.content ? req.body.content : entry.content,
+		// };
+
+		// await Entry.findByIdAndUpdate(
+		// 	req.params.id,
+		// 	modifiedEntry,
+		// 	{ new: true },
+		// 	(err, result) => {
+		// 		return res.status(200).json({
+		// 			success: true,
+		// 			data: result,
+		// 		});
+		// 	}
+		// );
 	} catch (err) {
-		// console.log(err);
+		console.log(err);
 		return res.status(500).json({
 			success: false,
 			error: "Server Error",
@@ -133,21 +173,38 @@ exports.modifyEntry = async (req, res, next) => {
  */
 exports.deleteEntry = async (req, res, next) => {
 	try {
-		const entry = await Entry.findById(req.params.id);
+		const user = await User.findById(req.user.id);
 
-		if (!entry) {
-			return res.status(404).json({
-				success: false,
-				error: `Entry of id ${req.params.id} does not exist`,
-			});
-		}
+		const entries = user.entries;
+		// console.log(entries);
 
-		await entry.remove();
+		const updated = entries.filter((entry) => entry.id !== req.params.id);
+
+		// console.log(updated);
+		user.entries = updated;
+
+		const updatedUser = await user.save();
 
 		return res.status(200).json({
 			success: true,
-			data: {},
+			updatedUser,
 		});
+
+		// const entry = await Entry.findById(req.params.id);
+
+		// if (!entry) {
+		// 	return res.status(404).json({
+		// 		success: false,
+		// 		error: `Entry of id ${req.params.id} does not exist`,
+		// 	});
+		// }
+
+		// await entry.remove();
+
+		// return res.status(200).json({
+		// 	success: true,
+		// 	data: {},
+		// });
 	} catch (err) {
 		return res.status(500).json({
 			success: false,
