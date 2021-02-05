@@ -43,6 +43,12 @@ export default function AppReducer(state, action) {
 				token: null,
 				isAuth: false,
 				user: "",
+				currentlyDisplayed: {
+					text: `Click a note to display`,
+					title: "",
+					id: 0,
+					created: 0,
+				},
 				// isRegistered: false,
 			};
 		case "GET_ENTRIES":
