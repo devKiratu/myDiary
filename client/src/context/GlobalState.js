@@ -111,8 +111,20 @@ export default function GlobalProvider({ children }) {
 			dispatch({ type: "AUTH_ERROR" });
 		}
 	}
+	function resetDisplay() {
+		dispatch({
+			type: "RESET_CURRENTLY_DISPLAYED",
+			payload: {
+				text: `Click a note to display`,
+				title: "",
+				id: 0,
+				created: 0,
+			},
+		});
+	}
 
-	async function logoutUser() {
+	function logoutUser() {
+		resetDisplay();
 		dispatch({
 			type: "LOGOUT_SUCCESS",
 		});
