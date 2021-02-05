@@ -99,6 +99,7 @@ exports.loginUser = async (req, res, next) => {
 				error: messages,
 			});
 		} else {
+			console.log(err);
 			return res.status(500).json({
 				success: false,
 				error: "Server Error",
