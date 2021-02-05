@@ -22,4 +22,7 @@ export const Wrapper = styled.div`
 	width: 400px;
 	margin: 50px auto;
 	height: 500px;
+	@media (max-width: 500px) {
+		width: 300px;
+	}
 `;
