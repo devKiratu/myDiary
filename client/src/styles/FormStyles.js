@@ -36,6 +36,7 @@ export const Input = styled.input`
 	width: 80%;
 	border-radius: 5px;
 	border: 1px solid #999;
+	outline: none;
 `;
 
 export const Button = styled.button`
@@ -44,6 +45,7 @@ export const Button = styled.button`
 	border: 1px solid #999;
 	border-radius: 10px;
 	margin: 30px 0;
+	outline: none;
 `;
 
 export const NotesForm = styled.form`
@@ -84,4 +86,14 @@ export const TextArea = styled.textarea`
 	border: 1px solid #dcdcdc;
 	border-radius: 5px;
 	background-color: rgb(223, 223, 223);
+`;
+
+export const Alert = styled.p`
+	padding: 10px 10px;
+	width: 80%;
+	border: 1px solid #999;
+	border-radius: 10px;
+	margin: 0 auto;
+	background-color: salmon;
+	text-align: left;
 `;

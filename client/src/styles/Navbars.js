@@ -9,10 +9,11 @@ export const StyledNav = styled.nav`
 	align-items: center;
 	box-sizing: border-box;
 	padding-top: 10px;
+	padding-right: 10px;
 	position: sticky;
 	top: 0;
 
-	@media (max-width: 700px) {
+	@media (max-width: 300px) {
 		display: inline;
 		position: relative;
 	}

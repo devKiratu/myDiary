@@ -13,11 +13,10 @@ import Contact from "./Contact";
 import Profile from "./Profile";
 import { GlobalContext } from "../context/GlobalState";
 import PrivateRoute from "./PrivateRoute";
-import LoadingSpinner from "./LoadingSpinner";
 import SignupSuccess from "./SignupSuccess";
 
 function App() {
-	const { checkIsAuth, isLoading } = useContext(GlobalContext);
+	const { checkIsAuth, isAuth, isRegistered } = useContext(GlobalContext);
 
 	useEffect(() => {
 		checkIsAuth();
@@ -25,27 +24,23 @@ function App() {
 	}, []);
 
 	return (
-		// <GlobalProvider>
 		<Router>
 			<GlobalStyles />
 			<Switch>
 				<Route path="/" exact component={LandingPage} />
 				<Route path="/contact" component={Contact} />
-				<Route path="/signin" component={SignIn} />
-				<Route path="/signup" component={SignUp} />
+				<Route path="/signin">
+					{isAuth ? <Redirect to="/profile" /> : <SignIn />}
+				</Route>
+				<Route path="/signup">
+					{isRegistered ? <Redirect to="/success" /> : <SignUp />}
+				</Route>
 				<Route path="/success" component={SignupSuccess} />
-				<Route path="/verify-register">
-					{!isLoading ? <Redirect to="/success" /> : <LoadingSpinner />}
-				</Route>
-				<Route path="/loading">
-					{!isLoading ? <Redirect to="/profile" /> : <LoadingSpinner />}
-				</Route>
 				<PrivateRoute path="/profile">
 					<Profile />
 				</PrivateRoute>
 			</Switch>
 		</Router>
-		// </GlobalProvider>
 	);
 }
 

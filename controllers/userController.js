@@ -11,6 +11,13 @@ exports.addNewUser = async (req, res, next) => {
 	try {
 		const { username, email, password } = req.body;
 
+		const user = await User.findOne({ email: email }).exec();
+
+		if (user !== null)
+			return res
+				.status(400)
+				.json({ success: false, msg: `user ${email} already exists` });
+
 		const newUser = {
 			username,
 			email,
@@ -48,6 +55,7 @@ exports.addNewUser = async (req, res, next) => {
 			return res.status(500).json({
 				success: false,
 				error: "Server Error",
+				err,
 			});
 		}
 	}
@@ -75,7 +83,7 @@ exports.loginUser = async (req, res, next) => {
 		// console.log(isValidPwd);
 
 		if (!isValidPwd)
-			return res.status(400).json({ success: false, msg: "invalid password" });
+			return res.status(400).json({ success: false, msg: "Invalid password" });
 
 		const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
 

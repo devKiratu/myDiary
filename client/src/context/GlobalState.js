@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useState } from "react";
 import AppReducer from "./AppReducer";
 
 //initial state
@@ -6,7 +6,8 @@ const initialState = {
 	token: localStorage.getItem("token"),
 	isAuth: false,
 	isLoading: false,
-	// isRegistered: false,
+	// error: null,
+	isRegistered: false,
 	user: "",
 	entries: [],
 	currentlyDisplayed: {
@@ -26,6 +27,8 @@ export const GlobalContext = createContext(initialState);
 
 export default function GlobalProvider({ children }) {
 	const [state, dispatch] = useReducer(AppReducer, initialState);
+	const [loginErr, setLoginErr] = useState(null);
+	const [registerErr, setRegisterErr] = useState(null);
 
 	//helper for header configuration
 	const headersConfig = {
@@ -36,11 +39,9 @@ export default function GlobalProvider({ children }) {
 	if (state.token) headersConfig.headers["x-auth-token"] = state.token;
 
 	//Helpers
-	function redirectUser(isLoading, isAuth, history) {
-		// const setToken = localStorage.getItem("token");
 
-		!isLoading ? history.push("/loading") : history.push("/profile");
-		// isLoading ? history.push("/contact") : history.push("/profile");
+	function resetIsRegistered() {
+		dispatch({ type: "RESET_REGISTER" });
 	}
 
 	function loading() {
@@ -84,8 +85,14 @@ export default function GlobalProvider({ children }) {
 				body: JSON.stringify(credentials),
 			});
 			const data = await res.json();
+
+			if (data.msg) {
+				setRegisterErr(data.msg);
+			} else {
+				dispatch({ type: "REGISTER_SUCCESS", payload: data });
+				setRegisterErr(null);
+			}
 			// console.log(data);
-			dispatch({ type: "REGISTER_SUCCESS", payload: data });
 		} catch (err) {
 			dispatch({ type: "AUTH_ERROR" });
 		}
@@ -99,7 +106,10 @@ export default function GlobalProvider({ children }) {
 				body: JSON.stringify(credentials),
 			});
 			const data = await res.json();
-			// console.log(data.user);
+			// console.log( "the data is ", data.msg );
+			if (data.msg) {
+				setLoginErr(data.msg);
+			}
 			dispatch({
 				type: "LOGIN_SUCCESS",
 				payload: {
@@ -107,6 +117,7 @@ export default function GlobalProvider({ children }) {
 					user: data.user.username,
 				},
 			});
+			setLoginErr(null);
 		} catch (err) {
 			dispatch({ type: "AUTH_ERROR" });
 		}
@@ -259,6 +270,7 @@ export default function GlobalProvider({ children }) {
 				isAuth: state.isAuth,
 				user: state.user,
 				isLoading: state.isLoading,
+				isRegistered: state.isRegistered,
 				getEntries,
 				displayNote,
 				toggleNoteEditor,
@@ -270,8 +282,10 @@ export default function GlobalProvider({ children }) {
 				signUp,
 				loadUser,
 				checkIsAuth,
-				redirectUser,
 				loading,
+				registerErr,
+				loginErr,
+				resetIsRegistered,
 			}}
 		>
 			{children}
