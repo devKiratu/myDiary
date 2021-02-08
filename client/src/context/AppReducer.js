@@ -2,11 +2,16 @@
 
 export default function AppReducer(state, action) {
 	switch (action.type) {
+		case "RESET_REGISTER":
+			return {
+				...state,
+				isRegistered: false,
+			};
 		case "REGISTER_SUCCESS":
 			return {
 				...state,
 				isLoading: false,
-				// isRegistered: true,
+				isRegistered: true,
 			};
 		case "LOADING":
 			return {
@@ -22,6 +27,7 @@ export default function AppReducer(state, action) {
 			return {
 				...state,
 				isAuth: true,
+				isRegistered: false,
 			};
 		case "LOGIN_SUCCESS":
 			localStorage.setItem("token", action.payload.token);
@@ -31,7 +37,8 @@ export default function AppReducer(state, action) {
 				token: localStorage.getItem("token"),
 				user: action.payload.user,
 				isLoading: false,
-				// isRegistered: false,
+				error: null,
+				isRegistered: false,
 			};
 		case "LOGOUT_SUCCESS":
 		case "AUTH_ERROR":

@@ -5,19 +5,18 @@ import {
 	Label,
 	Input,
 	Button,
+	Alert,
 } from "../../styles/FormStyles";
 import { Logo } from "../../styles/Navbars";
 import { Message } from "../../styles/LandingPageStyles";
 import LandingNav from "../LandingNav";
 import { GlobalContext } from "../../context/GlobalState";
-import { useHistory } from "react-router-dom";
 
 function SignUp() {
-	const { signUp, loading } = useContext(GlobalContext);
+	const { signUp, registerErr } = useContext(GlobalContext);
 	const [username, setUserName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const history = useHistory();
 
 	function handleSignup(e) {
 		e.preventDefault();
@@ -27,11 +26,6 @@ function SignUp() {
 			password,
 		};
 		signUp(credentials);
-		setUserName("");
-		setEmail("");
-		setPassword("");
-		loading();
-		history.push("/verify-register");
 	}
 
 	return (
@@ -39,7 +33,13 @@ function SignUp() {
 			<LandingNav />
 			<Form onSubmit={handleSignup}>
 				<Logo>myDiary</Logo>
-				<Message>Create an Account </Message>
+
+				{registerErr ? (
+					<Alert> {registerErr}</Alert>
+				) : (
+					<Message>Create an Account</Message>
+				)}
+
 				<Label htmlFor="username">Username</Label>
 				<Input
 					type="text"

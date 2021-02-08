@@ -17,12 +17,6 @@ function LandingNav() {
 				<StyledLink to="/contact">
 					<Message>Contact</Message>
 				</StyledLink>
-				{/* <StyledLink to="/signin">
-					<SignInButton>Sign In</SignInButton>
-				</StyledLink>
-				<StyledLink to="/signup">
-					<SignUpButton>Sign Up</SignUpButton>
-				</StyledLink> */}
 			</div>
 		</StyledNav>
 	);
