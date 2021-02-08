@@ -77,7 +77,7 @@ export const NotesInput = styled.input`
 	width: 85%;
 	border-radius: 5px;
 	border: 1px solid #dcdcdc;
-	background-color: rgb(223, 223, 223);
+	/* background-color: rgb(223, 223, 223); */
 	&:focus {
 		border: 2px solid cornflowerblue;
 	}
@@ -92,7 +92,7 @@ export const TextArea = styled.textarea`
 		"Lucida Sans", Arial, sans-serif;
 	border: 1px solid #dcdcdc;
 	border-radius: 5px;
-	background-color: rgb(223, 223, 223);
+	/* background-color: rgb(223, 223, 223); */
 	&:focus {
 		border: 2px solid cornflowerblue;
 	}

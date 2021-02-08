@@ -6,7 +6,7 @@ import {
 	NotesLabel,
 	TextArea,
 } from "../styles/FormStyles";
-import { NotesNav, SaveButton } from "../styles/Navbars";
+import { NavButton, NotesNav } from "../styles/Navbars";
 
 export default function EditModifyNote() {
 	const [title, setTitle] = useState("");
@@ -58,7 +58,8 @@ export default function EditModifyNote() {
 		<div>
 			<NotesForm onSubmit={handleSubmit}>
 				<NotesNav>
-					<SaveButton type="submit">Save</SaveButton>
+					<NavButton type="submit">Save</NavButton>
+					<NavButton onClick={() => toggleNoteEditor()}>Cancel</NavButton>
 				</NotesNav>
 
 				<NotesLabel htmlFor="Note Title">Note Title</NotesLabel>
