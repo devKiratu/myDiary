@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalState";
 import { Message } from "../styles/LandingPageStyles";
 import { Logo, SignUpButton } from "../styles/Navbars";
-import { StyledProfileNav } from "../styles/ProfileStyles";
+import { InnerCont, StyledProfileNav } from "../styles/ProfileStyles";
 
 function ProfileNav() {
 	const { entries, logoutUser, user } = useContext(GlobalContext);
@@ -17,26 +17,17 @@ function ProfileNav() {
 	return (
 		<StyledProfileNav>
 			<div>
-				{/* <StyledLogoLink to="/"> */}
 				<Logo>
 					<span style={{ textDecorationLine: "overline" }}>
 						{user.toLowerCase()}'s Diary
 					</span>
 				</Logo>
-				{/* </StyledLogoLink> */}
 			</div>
-			{/* <div>
-				<Message>
-					<span style={{ color: "yellow" }}>{user.toUpperCase()}'s Diary</span>
-				</Message>
-			</div> */}
-			<div>
+			<InnerCont>
 				<Message>Total Notes: {entries.length} </Message>
 				<Message>Settings</Message>
-				{/* <StyledLink to="/"> */}
 				<SignUpButton onClick={handleLogout}>Logout</SignUpButton>
-				{/* </StyledLink> */}
-			</div>
+			</InnerCont>
 		</StyledProfileNav>
 	);
 }

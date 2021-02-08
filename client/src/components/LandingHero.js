@@ -14,18 +14,16 @@ function LandingHero() {
 			<LandingNav />
 			<Container>
 				<div>
-					<Header>Karibu hapa</Header>
+					<Header>We're glad you're here!</Header>
 					<Message>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id mi
-						tempor, interdum lorem sit amet, vestibulum enim. Curabitur iaculis,
-						est sed porta malesuada, arcu leo accumsan orci, eget viverra dui
-						dolor nec lectus.
+						myDiary is an online journal where you can safely express your
+						thoughts and feelings. Have your notes with you always!
 					</Message>
 				</div>
 				<div>
 					<Header>Get Started</Header>
 					<StyledLink to="/signin">
-						<SignInButton>Sign In Here</SignInButton> |
+						<SignInButton>Sign In Here</SignInButton>|
 					</StyledLink>
 					<StyledLink to="/signup">
 						<SignUpButton>Sign Up Here</SignUpButton>
