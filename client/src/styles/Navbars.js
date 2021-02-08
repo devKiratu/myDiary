@@ -103,24 +103,11 @@ export const NotesNav = styled.nav`
 export const NavButton = styled.button`
 	border: none;
 	padding: 5px;
-	margin: 2px;
+	margin: 5px;
 	border-radius: 5px;
 	background-color: #fff;
 	font-weight: bold;
 	outline: none;
 	border: 2px solid #000;
 	cursor: pointer;
-`;
-
-export const SaveButton = styled.button`
-	padding: 5px;
-	margin: 2px 30px;
-	border-radius: 5px;
-	background-color: #fff;
-	font-weight: bold;
-	outline: none;
-	border: 2px solid #000;
-	cursor: pointer;
-	display: block;
-	/* float: right;  */
 `;
