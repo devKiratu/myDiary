@@ -37,6 +37,9 @@ export const Input = styled.input`
 	border-radius: 5px;
 	border: 1px solid #999;
 	outline: none;
+	&:focus {
+		border: 2px solid cornflowerblue;
+	}
 `;
 
 export const Button = styled.button`
@@ -68,16 +71,20 @@ export const NotesLabel = styled.label`
 
 export const NotesInput = styled.input`
 	display: inline-block;
-
+	outline: none;
 	margin: 10px;
 	padding: 20px;
 	width: 85%;
 	border-radius: 5px;
 	border: 1px solid #dcdcdc;
 	background-color: rgb(223, 223, 223);
+	&:focus {
+		border: 2px solid cornflowerblue;
+	}
 `;
 
 export const TextArea = styled.textarea`
+	outline: none;
 	padding: 10px;
 	width: 95%;
 	height: 70vh;
@@ -86,6 +93,9 @@ export const TextArea = styled.textarea`
 	border: 1px solid #dcdcdc;
 	border-radius: 5px;
 	background-color: rgb(223, 223, 223);
+	&:focus {
+		border: 2px solid cornflowerblue;
+	}
 `;
 
 export const Alert = styled.p`

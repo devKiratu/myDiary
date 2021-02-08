@@ -42,6 +42,13 @@ export const StyledProfileNav = styled.nav`
 		position: unset;
 	}
 `;
+export const InnerCont = styled.div`
+	@media (max-width: 400px) {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+	}
+`;
 
 export const CardContent = styled.div`
 	margin: 10px;
