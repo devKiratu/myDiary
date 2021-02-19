@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalState";
 import { Message } from "../styles/LandingPageStyles";
-import { Logo, SignUpButton } from "../styles/Navbars";
+import { Logo, SignUpButton, StyledLink } from "../styles/Navbars";
 import { InnerCont, StyledProfileNav } from "../styles/ProfileStyles";
 
 function ProfileNav() {
@@ -22,6 +22,11 @@ function ProfileNav() {
 						{user.toLowerCase()}'s Diary
 					</span>
 				</Logo>
+			</div>
+			<div>
+				<StyledLink to="/" style={{ textDecoration: "none", color: "yellow" }}>
+					<Message>HOMEPAGE</Message>
+				</StyledLink>
 			</div>
 			<InnerCont>
 				<Message>Total Notes: {entries.length} </Message>
