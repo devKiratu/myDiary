@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { GlobalContext } from "../context/GlobalState";
 import { Message } from "../styles/LandingPageStyles";
 import { Logo, StyledLink, StyledNav } from "../styles/Navbars";
 
 function LandingNav() {
+	const { user } = useContext(GlobalContext);
 	return (
 		<StyledNav>
 			<div>
@@ -12,7 +14,7 @@ function LandingNav() {
 			</div>
 			<div>
 				<StyledLink to="/profile">
-					<Message>Profile</Message>
+					<Message>{user ? user : "Profile"}</Message>
 				</StyledLink>
 				<StyledLink to="/contact">
 					<Message>Contact</Message>
